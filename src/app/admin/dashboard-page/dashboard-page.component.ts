@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { PostsService } from 'src/app/shared/posts.service';
-import { Todo } from 'src/app/shared/interfaces';
+import { PostsService } from '../../shared/posts.service';
+import { Todo } from '../../shared/interfaces';
 import { Subscription } from 'rxjs';
 import { AlertService } from '../shared/services/alert.service';
 
