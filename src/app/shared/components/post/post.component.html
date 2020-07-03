@@ -1,0 +1,13 @@
+<div class="card">
+  <div class="card-header">
+    <h2>{{ todo.title }}</h2>
+    <small>{{ todo.date | date: 'dd.MM.yyyy' }}</small>
+  </div>
+  <div>
+    <small>{{ todo.author }}</small>
+  </div>
+
+  <button [routerLink]="['/todo', todo.id]" class="btn btn-primary">
+    Open
+  </button>
+</div>

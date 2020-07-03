@@ -1,0 +1,135 @@
+<form
+  class="card"
+  [formGroup]="registerForm"
+  #formDirective="ngForm"
+  (ngSubmit)="submit()"
+>
+  <h2>Register</h2>
+
+  <div class="alert alert-danger" *ngIf="auth.error$ | async as error">
+    {{ error }}
+  </div>
+
+  <div class="alert alert-info" *ngIf="message">
+    {{ message }}
+  </div>
+
+  <div
+    class="form-control"
+    [ngClass]="{
+      invalid:
+        registerForm.get('email').touched && registerForm.get('email').invalid
+    }"
+  >
+    <label for="email">Email:</label>
+    <input id="email" type="email" formControlName="email" />
+    <div
+      *ngIf="
+        registerForm.get('email').touched && registerForm.get('email').invalid
+      "
+      class="validation"
+    >
+      <small class="colorErr" *ngIf="registerForm.get('email').errors.required"
+        >Enter email</small
+      >
+      <small class="colorErr" *ngIf="registerForm.get('email').errors.email"
+        >Enter correct email</small
+      >
+      <!-- <small
+        class="colorErr"
+        *ngIf="registerForm.controls.email.hasError('isExists')"
+      >
+        Email alreay exists
+      </small> -->
+    </div>
+  </div>
+
+  <!-- <div class="form-control">
+    <label for="firstName">First Name:</label>
+    <input id="firstName" type="text" formControlName="firstName" />
+  </div>
+
+  <div class="form-control">
+    <label for="lastName">Last Name:</label>
+    <input id="lastName" type="text" formControlName="lastName" />
+  </div> -->
+  <div
+    class="form-control"
+    [ngClass]="{
+      invalid:
+        registerForm.get('password').touched &&
+        registerForm.get('password').invalid
+    }"
+  >
+    <label for="password">Password:</label>
+    <input id="password" type="password" formControlName="password" />
+
+    <div
+      class="validation"
+      *ngIf="
+        registerForm.get('password').touched &&
+        registerForm.get('password').invalid
+      "
+    >
+      <small
+        class="colorErr"
+        *ngIf="registerForm.get('password').errors.required"
+        >Enter password</small
+      >
+      <small
+        class="colorErr"
+        *ngIf="registerForm.get('password').errors.minlength"
+        >Password can not be less than
+        {{ registerForm.get('password').errors.minlength.requiredLength }}
+        symbols. Now it is
+        {{ registerForm.get('password').errors.minlength.actualLength }}
+        symbols. symbols</small
+      >
+    </div>
+  </div>
+
+  <div
+    class="form-control"
+    [ngClass]="{
+      invalid:
+        registerForm.get('confirmPassword').touched &&
+        registerForm.get('confirmPassword').invalid
+    }"
+  >
+    <label for="confirmPassword">Confirm password:</label>
+    <input
+      id="confirmPassword"
+      type="password"
+      formControlName="confirmPassword"
+    />
+    <div
+      *ngIf="
+        registerForm.get('confirmPassword').touched &&
+        registerForm.get('confirmPassword').invalid
+      "
+      class="validation"
+    >
+      <small
+        class="colorErr"
+        *ngIf="registerForm.get('confirmPassword').errors.required"
+        >Confirm password</small
+      >
+      <!-- <small
+        class="colorErr"
+        *ngIf="registerForm.controls.confirmPassword.hasError('passwordsMatch')"
+        >Password doensn't match</small
+      > -->
+    </div>
+  </div>
+
+  <button
+    type="submit"
+    class="btn btn-primary"
+    [disabled]="registerForm.invalid || submitted"
+  >
+    Submit
+  </button>
+  <a [routerLink]="['/admin', 'login']"
+    >Have already account? <strong>Log in here</strong></a
+  >
+</form>

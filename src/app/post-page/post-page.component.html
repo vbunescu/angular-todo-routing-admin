@@ -1,0 +1,27 @@
+<div *ngIf="todo$ | async as todo; else loading">
+  <div class="post">
+    <div class="header">
+      <h1>Title: {{ todo.title }}</h1>
+
+      <button routerLink="/" class="btn btn-link">To home page</button>
+    </div>
+
+    <div class="info">
+      <strong>Author: {{ todo.author }}</strong>
+    </div>
+    <div>
+      <strong>Priority: {{ todo.priority }}</strong>
+    </div>
+    <div>
+      <strong>Deadline: {{ todo.date | date: 'dd.MM.yyyy' }}</strong>
+    </div>
+
+    <div>
+      <strong>Description:</strong>
+      <quill-view-html [content]="todo.description"></quill-view-html>
+    </div>
+  </div>
+</div>
+<ng-template #loading>
+  <p class="text-center">Loaing todos...</p>
+</ng-template>

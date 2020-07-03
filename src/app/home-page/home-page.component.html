@@ -1,0 +1,8 @@
+<div *ngIf="todos$ | async as todos; else loading" class="posts">
+  <app-post *ngFor="let todo of todos" [todo]="todo"> </app-post>
+</div>
+<!-- as todos  ne aresam stream-ului si il trecem prin  pipe pentru a prelua datele,
+datele din stream le salvam in variabila todos. Daca todos nu sunt inca sa se afiseze loading -->
+<ng-template #loading>
+  <p class="text-center">Loading todos...</p>
+</ng-template>

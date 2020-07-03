@@ -1,0 +1,77 @@
+<div *ngIf="todos.length; else loading">
+  <div class="form-control">
+    <mat-button-toggle-group name="fontStyle" aria-label="Font Style">
+      <mat-button-toggle
+        value="title"
+        mat-stroked-button
+        color="primary"
+        (click)="searchField = 'title'"
+        >by title</mat-button-toggle
+      >
+      <mat-button-toggle
+        value="description"
+        mat-stroked-button
+        color="primary"
+        (click)="searchField = 'description'"
+        >by description</mat-button-toggle
+      >
+      <mat-button-toggle
+        value="priority"
+        mat-stroked-button
+        color="primary"
+        (click)="searchField = 'priority'"
+        >by priority</mat-button-toggle
+      >
+    </mat-button-toggle-group>
+
+    <input
+      type="text"
+      placeholder="Find todos..."
+      (input)="searchInput = $event.target.value"
+    />
+  </div>
+  <table>
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Title</th>
+        <th>Description</th>
+        <th>Author</th>
+        <th>Priority</th>
+        <th>Data</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr
+        *ngFor="
+          let todo of todos | searchTodos: searchInput:searchField;
+          let idx = index
+        "
+      >
+        <td>{{ idx + 1 }}</td>
+        <td>{{ todo.title }}</td>
+
+        <td>
+          <quill-view-html [content]="todo.description"></quill-view-html>
+        </td>
+        <td>{{ todo.author }}</td>
+        <td>{{ todo.priority }}</td>
+        <td>{{ todo.date | date: 'MM/dd/yyyy':null:'ro-MD' }}</td>
+        <td>
+          <button
+            class="btn btn-link open"
+            [routerLink]="['/admin', 'todo', todo.id, 'edit']"
+          >
+            Open
+          </button>
+          <a (click)="remove(todo.id)">Delete</a>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<ng-template #loading>
+  <p class="text-center">Loading...</p>
+</ng-template>

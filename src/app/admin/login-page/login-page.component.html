@@ -1,0 +1,80 @@
+<form
+  class="card"
+  [formGroup]="loginForm"
+  (ngSubmit)="submit()"
+  #formDirective="ngForm"
+>
+  <h2>Log in the administrator page</h2>
+
+  <div class="alert alert-danger" *ngIf="auth.error$ | async as error">
+    <!-- trecem streamul prin async pipe si spunem cum angular in html cu el sa lucreze. Valoarea obtinuta sa fie transformata in variabila locala error -->
+    {{ error }}
+  </div>
+
+  <div class="alert alert-info" *ngIf="message">
+    {{ message }}
+  </div>
+
+  <div
+    class="form-control"
+    [ngClass]="{
+      invalid: loginForm.get('email').touched && loginForm.get('email').invalid
+    }"
+  >
+    <label for="email">Email:</label>
+    <input id="email" type="email" formControlName="email" />
+    <div
+      *ngIf="loginForm.get('email').touched && loginForm.get('email').invalid"
+      class="validation"
+    >
+      <small class="colorErr" *ngIf="loginForm.get('email').errors.required"
+        >Enter email</small
+      >
+      <small class="colorErr" *ngIf="loginForm.get('email').errors.email"
+        >Enter correct email</small
+      >
+    </div>
+  </div>
+
+  <div
+    class="form-control"
+    [ngClass]="{
+      invalid:
+        loginForm.get('password').touched && 
+        loginForm.get('password').invalid
+    }"
+  >
+    <label for="password">Password:</label>
+    <input id="password" type="password" formControlName="password" />
+    <div
+      class="validation"
+      *ngIf="
+        loginForm.get('password').touched && 
+        loginForm.get('password').invalid
+      "
+    >
+      <small class="colorErr" *ngIf="loginForm.get('password').errors.required"
+        >Enter password</small
+      >
+      <small class="colorErr" *ngIf="loginForm.get('password').errors.minlength"
+        >Password can not be less than
+        {{ loginForm.get('password').errors.minlength.requiredLength }} symbols.
+        Now it is
+        {{ loginForm.get('password').errors.minlength.actualLength }} symbols.
+        symbols</small
+      >
+    </div>
+  </div>
+
+  <button
+    type="submit"
+    class="btn btn-primary"
+    [disabled]="loginForm.invalid || submitted"
+  >
+    Enter
+  </button>
+
+  <a [routerLink]="['/admin', 'register']" routerLinkActive="active"
+    >No account? <strong> Create one here</strong></a
+  >
+</form>
